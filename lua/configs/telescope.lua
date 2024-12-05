@@ -1,6 +1,5 @@
 local status, telescope = pcall(require, 'telescope')
 local builtin = require('telescope.builtin')
-local toggle_preview = require('telescope.actions.layout').toggle_preview
 local actions = require('telescope.actions')
 
 if not status then
@@ -47,12 +46,8 @@ telescope.setup({
 
     mappings = {
       n = {
-        ['p'] = toggle_preview,
         ['d'] = actions.delete_buffer,
         ['q'] = actions.close,
-      },
-      i = {
-        ['<C-p>'] = toggle_preview,
       },
     },
   },
