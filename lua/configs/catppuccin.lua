@@ -6,14 +6,18 @@ end
 
 catppuccin.setup({
   flavour = 'latte',
-  transparent_background = false,
   integrations = {
     cmp = true,
-    treesitter = true,
-    mason = true,
     gitsigns = true,
+    mason = true,
     neotree = true,
+    neogit = true,
+    treesitter = true,
+    noice = true,
+    mini = {
+      enabled = true,
+      indentscope_color = '',
+    },
   },
+  show_end_of_buffer = true,
 })
-
-vim.cmd.colorscheme('catppuccin')

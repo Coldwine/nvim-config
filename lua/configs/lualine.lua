@@ -13,8 +13,6 @@ lualine.setup({
     disabled_filetypes = {
       statusline = {},
       winbar = {},
-      'packer',
-      'neo-tree',
     },
     ignore_focus = {},
     always_divide_middle = true,
@@ -44,5 +42,5 @@ lualine.setup({
   tabline = {},
   winbar = {},
   inactive_winbar = {},
-  extensions = {},
+  extensions = { 'neo-tree', 'lazy' },
 })

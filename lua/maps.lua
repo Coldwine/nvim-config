@@ -2,25 +2,11 @@ local function map(mode, lhs, rhs)
   vim.keymap.set(mode, lhs, rhs, { silent = true })
 end
 
-local status, telescope = pcall(require, 'telescope.builtin')
-
-if status then
-  -- Telescope
-  map('n', '<c-p>', telescope.find_files)
-  map('n', '<Leader>/', telescope.live_grep)
-  map('n', '<Leader><Enter>', telescope.buffers)
-  map('n', '<Leader>fh', telescope.help_tags)
-  map('n', '<Leader>fs', telescope.git_status)
-  map('n', '<Leader>fc', telescope.git_commits)
-else
-  print('Telescope not found')
-end
-
 -- Utils
 map('v', '<', '<gv')
 map('v', '>', '>gv')
 map('n', ' ', '')
-map('n', '<BS>', '<CMD>set hlsearch! hlsearch?<CR>')
+map('n', '<bs>', '<cmd>set hlsearch! hlsearch?<CR>')
 
 -- Save
 map('n', '<leader>w', '<CMD>update<CR>')
@@ -30,11 +16,10 @@ map('n', '<leader>q', '<CMD>q<CR>')
 
 -- Smash escape and unbind arrow keys
 map('i', 'jk', '<ESC>')
-map('i', 'ESC', '<NOP>')
-map('i', 'Left', '<NOP>')
-map('i', 'Right', '<NOP>')
-map('i', 'Up', '<NOP>')
-map('i', 'Down', '<NOP>')
+map('i', '<left>', '<NOP>')
+map('i', '<right>', '<NOP>')
+map('i', '<up>', '<NOP>')
+map('i', '<down>', '<NOP>')
 
 -- Windows
 map('n', '<leader>n', '<CMD>vsplit<CR>')
