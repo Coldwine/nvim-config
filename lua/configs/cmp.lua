@@ -10,19 +10,6 @@ local has_words_before = function()
   return (vim.api.nvim_buf_get_lines(0, cursor[1] - 1, cursor[1], true)[1] or ''):sub(cursor[2], cursor[2]):match('%s')
 end
 
-local function border(hl_name)
-  return {
-    { '╭', hl_name },
-    { '─', hl_name },
-    { '╮', hl_name },
-    { '│', hl_name },
-    { '╯', hl_name },
-    { '─', hl_name },
-    { '╰', hl_name },
-    { '│', hl_name },
-  }
-end
-
 cmp.event:on('confirm_done', require('nvim-autopairs.completion.cmp').on_confirm_done())
 cmp.setup({
   snippet = {
@@ -99,5 +86,6 @@ cmp.setup({
     { name = 'nvim_lua' },
     { name = 'buffer' },
     { name = 'path' },
+    { name = 'calc' },
   },
 })
