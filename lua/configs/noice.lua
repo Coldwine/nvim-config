@@ -1,19 +1,5 @@
 local status, noice = pcall(require, 'noice')
-
-if not status then
-  return
-end
-
-local rounded_border_style = {
-  top_left = '╭',
-  top = '─',
-  top_right = '╮',
-  left = '│',
-  right = '│',
-  bottom_left = '╰',
-  bottom = '─',
-  bottom_right = '╯',
-}
+if not status then return end
 
 noice.setup({
   cmdline = {
@@ -173,8 +159,7 @@ noice.setup({
         height = 'auto',
       },
       border = {
-        style = rounded_border_style,
-        -- style = "none",
+        style = 'single',
       },
       filter_options = {},
       win_options = {
@@ -194,6 +179,9 @@ noice.setup({
         winblend = 0,
       },
     },
+    hover = {
+      border = { style = 'single' },
+    },
     popupmenu = {
       relative = 'editor',
       position = {
@@ -205,7 +193,7 @@ noice.setup({
         height = 10,
       },
       border = {
-        style = rounded_border_style,
+        style = 'single',
         padding = { 0, 1 },
       },
       win_options = {
@@ -214,13 +202,6 @@ noice.setup({
     },
   },
   routes = {
-    {
-      filter = {
-        event = 'msg_show',
-        -- kind = "search_count",
-        find = 'written',
-      },
-      opts = { skip = true },
-    },
+    { filter = { event = 'msg_show', find = 'written' }, opts = { skip = true } },
   },
 })

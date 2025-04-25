@@ -1,36 +1,37 @@
 local status, telescope = pcall(require, 'telescope')
+if not status then return end
+
 local builtin = require('telescope.builtin')
 local actions = require('telescope.actions')
 
-if not status then
-  return
-end
-
 local border = {
-  prompt = { '─', '│', ' ', '│', '╭', '╮', '│', '│' },
-  results = { '─', '│', '─', '│', '├', '┤', '╯', '╰' },
-  preview = { '─', '│', '─', '│', '╭', '╮', '╯', '╰' },
+  prompt = { '─', '│', '─', '│', '┌', '┐', '┴', '└' },
+  results = { '─', '│', '─', '│', '┌', '┬', '┤', '├' },
+  preview = { '─', '│', '─', ' ', '─', '┐', '┘', '─' },
 }
-local layout_config = {
-  preview_cutoff = 10,
-  height = 0.6,
-  anchor = 'S',
-  mirror = false,
-  prompt_position = 'top',
-  width = { padding = 0 },
-}
+local layout_strategies = require('telescope.pickers.layout_strategies')
+layout_strategies.horizontal_fused = function(picker, max_columns, max_lines, layout_config)
+  local layout = layout_strategies.horizontal(picker, max_columns, max_lines, layout_config)
+  layout.prompt.title = ''
+  layout.results.title = ''
+  layout.results.height = layout.results.height + 1
+  layout.results.borderchars = border.results
+  layout.prompt.borderchars = border.prompt
+  if layout.preview then
+    layout.preview.title = ''
+    layout.preview.borderchars = border.preview
+  end
+  return layout
+end
 
 telescope.setup({
   defaults = {
-    layout_strategy = 'center',
-    layout_config = layout_config,
+    layout_strategy = 'horizontal_fused',
     sorting_strategy = 'ascending',
     prompt_prefix = '   ',
     entry_prefix = '   ',
     multi_icon = '  ',
     selection_caret = '  ',
-    border = true,
-    borderchars = border,
     results_title = '',
     prompt_title = ' prompt ',
     file_ignore_patterns = {
@@ -43,17 +44,11 @@ telescope.setup({
       '**\\*.docx',
     },
     preview = true,
-
     mappings = {
       n = {
         ['d'] = actions.delete_buffer,
         ['q'] = actions.close,
       },
-    },
-  },
-  pickers = {
-    find_files = {
-      theme = 'dropdown',
     },
   },
   extensions = {
@@ -64,24 +59,45 @@ telescope.setup({
       case_mode = 'smart_case',
     },
     whaler = {
-      directories = { '~/Workspace', { path = '/home/coldwine/Workspace', alias = 'work' } },
-      oneoff_directories = { '~/.config/nvim' },
+      oneoff_directories = { '~/Workspace/app', '~/.config/nvim', '~/.config/tmux', '~/.config/kitty' },
       auto_file_explorer = false,
       file_explorer = 'neotree',
+      theme = {
+        layout_strategy = 'horizontal_fused',
+        previewer = true,
+        layout_config = {
+          width = 0.8,
+          height = 0.8,
+          preview_cutoff = 1,
+          horizontal_fused = {
+            width = 0.8,
+            height = 0.8,
+            preview_cutoff = 1,
+          },
+        },
+      },
     },
   },
 })
 
-telescope.load_extension('fzf')
-telescope.load_extension('whaler')
-telescope.load_extension('noice')
+-- Load extensions in a loop
+for _, ext in ipairs({ 'fzf', 'whaler', 'noice' }) do
+  telescope.load_extension(ext)
+end
 
-local opts = { silent = true }
-
-vim.keymap.set('n', '<c-p>', builtin.find_files, opts)
-vim.keymap.set('n', '<leader>/', builtin.live_grep, opts)
-vim.keymap.set('n', '<leader><enter>', builtin.buffers, opts)
-vim.keymap.set('n', '<leader>fw', telescope.extensions.whaler.whaler, opts)
-vim.keymap.set('n', '<leader>fh', builtin.help_tags, opts)
-vim.keymap.set('n', '<leader>fs', builtin.git_status, opts)
-vim.keymap.set('n', '<leader>fc', builtin.git_commits, opts)
+local mappings = {
+  ['<c-p>'] = { func = builtin.find_files, desc = 'Find files' },
+  ['<leader>/'] = { func = builtin.live_grep, desc = 'Live grep' },
+  ['<leader><enter>'] = { func = builtin.buffers, desc = 'List buffers' },
+  ['<leader>fw'] = {
+    func = telescope.extensions.whaler.whaler,
+    desc = 'Whaler file explorer with custom layout',
+  },
+  ['<leader>fh'] = { func = builtin.help_tags, desc = 'Find help tags' },
+  ['<leader>fs'] = { func = builtin.git_status, desc = 'Git status' },
+  ['<leader>fc'] = { func = builtin.git_commits, desc = 'Git commits' },
+  ['<leader>dw'] = { func = function() builtin.diagnostics({ bufnr = 0 }) end, desc = 'Diagnostics (current buffer)' },
+}
+for key, map in pairs(mappings) do
+  vim.keymap.set('n', key, map.func, { silent = true, desc = map.desc })
+end

@@ -1,8 +1,5 @@
 local status = pcall(require, 'lspconfig')
-
-if not status then
-  return
-end
+if not status then return end
 
 vim.api.nvim_create_autocmd('LspAttach', {
   desc = 'LSP actions',

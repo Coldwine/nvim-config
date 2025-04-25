@@ -3,5 +3,5 @@ return {
   { 'nvim-tree/nvim-web-devicons', lazy = true },
   { 'MunifTanjim/nui.nvim', lazy = true },
   { 'onsails/lspkind.nvim', lazy = true },
-  { 'rcarriga/nvim-notify', lazy = true },
+  { 'rcarriga/nvim-notify', lazy = true, config = function() require('configs.notify') end },
 }

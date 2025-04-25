@@ -1,8 +1,5 @@
-local status, conform = pcall(require, 'conform')
-
-if not status then
-  return
-end
+local ok, conform = pcall(require, 'conform')
+if not ok then return end
 
 conform.setup({
   formatters_by_ft = {
@@ -19,12 +16,12 @@ conform.setup({
     graphql = { 'prettier' },
     lua = { 'stylua' },
   },
-  format_on_save = {
-    lsp_fallback = true,
-    async = false,
-  },
+  format_on_save = { lsp_format = 'fallback', timeout_ms = 500 },
 })
 
-vim.keymap.set({ 'n', 'v' }, '<leader>ft', function()
-  conform.format({ lsp_fallback = true, async = false })
-end, { desc = 'Format file or range (in visual mode)' })
+vim.keymap.set(
+  { 'n', 'v' },
+  '<leader>ft',
+  function() conform.format({ lsp_format = 'fallback', timeout_ms = 500 }) end,
+  { desc = 'Format file or range (in visual mode)' }
+)
