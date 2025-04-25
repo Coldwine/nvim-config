@@ -3,14 +3,33 @@ if not status then return end
 
 noice.setup({
   cmdline = {
-    enabled = true,
-    view = 'cmdline_popup',
-    opts = {},
     format = {
-      cmdline = { pattern = '^:', icon = '', lang = 'vim', title = ' Command ' },
-      search_down = { kind = 'search', pattern = '^/', icon = '  ', lang = 'regex', title = ' Search Down ' },
-      search_up = { kind = 'search', pattern = '^%?', icon = '  ', lang = 'regex', title = ' Search Up ' },
-      filter = { pattern = '^:%s*!', icon = '  ', lang = 'bash', title = ' Filter ' },
+      cmdline = {
+        pattern = '^:',
+        icon = '',
+        lang = 'vim',
+        title = ' Command ',
+      },
+      search_down = {
+        kind = 'search',
+        pattern = '^/',
+        icon = '  ',
+        lang = 'regex',
+        title = ' Search Down ',
+      },
+      search_up = {
+        kind = 'search',
+        pattern = '^%?',
+        icon = '  ',
+        lang = 'regex',
+        title = ' Search Up ',
+      },
+      filter = {
+        pattern = '^:%s*!',
+        icon = '  ',
+        lang = 'bash',
+        title = ' Filter ',
+      },
       lua = {
         pattern = { '^:%s*lua%s+', '^:%s*lua%s*=%s*', '^:%s*=%s*' },
         icon = '  ',
@@ -29,15 +48,8 @@ noice.setup({
     view_history = 'message',
     view_search = 'virtualtext',
   },
-  popup_menu = {
-    enabled = true,
-    backend = 'cmp',
-    kind_icons = {},
-  },
-  redirect = {
-    view = 'popup',
-    filter = { event = 'msg_show' },
-  },
+  popup_menu = { enabled = true, backend = 'cmp', kind_icons = {} },
+  redirect = { view = 'popup', filter = { event = 'msg_show' } },
   command = {
     history = {
       view = 'split',
@@ -73,10 +85,7 @@ noice.setup({
       filter_opts = { reverse = true },
     },
   },
-  notify = {
-    enabled = true,
-    view = 'notify',
-  },
+  notify = { enabled = true, view = 'notify' },
   lsp = {
     progress = {
       enabled = true,
@@ -163,7 +172,10 @@ noice.setup({
       },
       filter_options = {},
       win_options = {
-        winhighlight = { Normal = 'TelescopePromptNormal', FloatBorder = 'DiagnosticInfo' },
+        winhighlight = {
+          Normal = 'TelescopePromptNormal',
+          FloatBorder = 'DiagnosticInfo',
+        },
       },
     },
     split = {
@@ -197,11 +209,17 @@ noice.setup({
         padding = { 0, 1 },
       },
       win_options = {
-        winhighlight = { Normal = 'TelescopePromptNormal', FloatBorder = 'DiagnosticInfo' },
+        winhighlight = {
+          Normal = 'TelescopePromptNormal',
+          FloatBorder = 'DiagnosticInfo',
+        },
       },
     },
   },
   routes = {
-    { filter = { event = 'msg_show', find = 'written' }, opts = { skip = true } },
+    {
+      filter = { event = 'msg_show', find = 'written' },
+      opts = { skip = true },
+    },
   },
 })

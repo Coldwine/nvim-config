@@ -40,6 +40,7 @@
   "telescope-fzf-native.nvim": { "branch": "main", "commit": "1f08ed60cafc8f6168b72b80be2b2ea149813e55" },
   "telescope.nvim": { "branch": "master", "commit": "a4ed82509cecc56df1c7138920a1aeaf246c0ac5" },
   "toggleterm.nvim": { "branch": "main", "commit": "9a88eae817ef395952e08650b3283726786fb5fb" },
+  "vim-kitty": { "branch": "main", "commit": "fd6df8b8396ffb7ea099dc6aecfbc7cf2bab0b2f" },
   "vim-tmux-navigator": { "branch": "master", "commit": "33afa80db65113561dc53fa732b7f5e53d5ecfd0" },
   "whaler": { "branch": "main", "commit": "9e0b67e36250cb80e679563adcd4b7451eae26b2" }
 }

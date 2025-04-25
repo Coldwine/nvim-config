@@ -6,12 +6,16 @@ if not luasnip_status then return end
 
 local has_words_before = function()
   local cursor = vim.api.nvim_win_get_cursor(0)
-  local line = vim.api.nvim_buf_get_lines(0, cursor[1] - 1, cursor[1], true)[1] or ''
+  local line = vim.api.nvim_buf_get_lines(0, cursor[1] - 1, cursor[1], true)[1]
+    or ''
   return cursor[2] ~= 0 and line:sub(cursor[2], cursor[2]):match('%s') == nil
 end
 
-local autopairs_status, cmp_autopairs = pcall(require, 'nvim-autopairs.completion.cmp')
-if autopairs_status then cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done()) end
+local autopairs_status, cmp_autopairs =
+  pcall(require, 'nvim-autopairs.completion.cmp')
+if autopairs_status then
+  cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
+end
 
 local lspkind_status, lspkind = pcall(require, 'lspkind')
 if not lspkind_status then return end
@@ -22,7 +26,8 @@ local custom_kind_icons = {
   Copilot = '', -- Custom icon for Copilot
 }
 -- Merge lspkind's default icons with custom ones
-local kind_icons = vim.tbl_extend('force', lspkind.presets.default, custom_kind_icons)
+local kind_icons =
+  vim.tbl_extend('force', lspkind.presets.default, custom_kind_icons)
 
 cmp.setup({
   snippet = {
